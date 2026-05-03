@@ -11,7 +11,8 @@ then add your own skills on top.
 
 ### hello-world
 
-A minimal example skill that demonstrates the Agent Skills format.
+A minimal example skill that demonstrates the Agent Skills format. When
+activated it runs `whoami` and greets the user by their OS username.
 
 **Use when:**
 
@@ -19,6 +20,28 @@ A minimal example skill that demonstrates the Agent Skills format.
 - "hi"
 - "你好"
 - "show me a minimal skill example"
+
+### run-command
+
+Lets the user delegate a shell command to the agent in natural language,
+guarded by a 3-tier policy (`ALLOW` / `CONFIRM` / `DENY`) and a deny-list
+helper script.
+
+**Use when:**
+
+- "run `git status`"
+- "execute `ls -la`"
+- "运行 `df -h`"
+- "执行 `whoami`"
+- "跑一下 `npm test`"
+
+**Will refuse (DENY):** `rm -rf /`, `curl ... | bash`, `mkfs`, fork
+bombs, shutdown/reboot, secret-file exfiltration, and similar
+catastrophic patterns.
+
+**Will ask first (CONFIRM):** anything that writes / installs / pushes /
+modifies system state — including `rm`, `git push`, `npm install`,
+`docker run`, `cat .env`.
 
 ## Installation
 
